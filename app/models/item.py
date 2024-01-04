@@ -1,7 +1,7 @@
 import psycopg
 
 
-def setup_item_table(db_url: str) -> bool:
+async def setup_item_table(db_url: str) -> bool:
     # Connect to an existing database
     with psycopg.connect(db_url) as conn:
         # Open a cursor to perform database operations

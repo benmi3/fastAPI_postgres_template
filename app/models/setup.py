@@ -19,10 +19,10 @@ async def check_db(
         return False
     # If table does not exist, create it
     # User
-    if not setup_user_table(db_url):
+    if not await setup_user_table(db_url):
         return False
     # Comment
-    if not setup_item_table(db_url):
+    if not await setup_item_table(db_url):
         return False
 
     return True

@@ -1,7 +1,7 @@
 import psycopg
 
 
-def setup_user_table(db_url: str):
+async def setup_user_table(db_url: str):
     # Connect to an existing database
     with psycopg.connect(db_url) as conn:
         # Open a cursor to perform database operations

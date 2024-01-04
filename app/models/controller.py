@@ -26,10 +26,10 @@ class Controller:
         self.db_url = f"postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
         # except TypeError:
         #    self.db_url = ""
-        self.check = check_db(db_user, db_pass, db_host, db_port, db_name, self.db_url)
+        self.check = self.check_db()
 
     async def check_db(self) -> bool:
-        return await self.check
+        return await check_db(db_user, db_pass, db_host, db_port, db_name, self.db_url)
 
 
 class UserController(Controller):
