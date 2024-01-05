@@ -37,7 +37,19 @@ async def select_all_items(db_url: str, identifier: str) -> list:
     return [cur]
 
 
-async def insert_item(db_url: str, cid: str, item: str, identifier: str) -> bool:
+async def select_item_by_item_identifier_cid(
+        db_url: str, item: str, identifier: str, cid: str) -> str:
+    async with await psycopg.AsyncConnection.connect(db_url) as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """SELECT id FROM item_table WHERE item = %s AND identifier = %s AND cid = %s """,
+                (item, identifier, cid))
+            await cur.fetchone()
+    return cur[0]
+
+
+async def insert_item(
+        db_url: str, cid: str, item: str, identifier: str) -> bool:
     # Connect to an existing database
     async with await psycopg.AsyncConnection.connect(db_url) as conn:
         # Open a cursor to perform database operations
@@ -56,7 +68,12 @@ async def insert_item(db_url: str, cid: str, item: str, identifier: str) -> bool
     return True
 
 
-async def update_item_by_id(db_url: str, item_id: str, cid: str, item: str, identifier: str) -> bool:
+async def update_item_by_id(
+        db_url: str,
+        item_id: str,
+        cid: str,
+        item: str,
+        identifier: str) -> bool:
     # Connect to an existing database
     async with await psycopg.AsyncConnection.connect(db_url) as conn:
         # Open a cursor to perform database operations
@@ -72,7 +89,8 @@ async def update_item_by_id(db_url: str, item_id: str, cid: str, item: str, iden
     return True
 
 
-async def delete_item_by_id(db_url: str, item_id: str, cid: str, identifier: str) -> bool:
+async def delete_item_by_id(
+        db_url: str, item_id: str, cid: str, identifier: str) -> bool:
     # Connect to an existing database
     async with await psycopg.AsyncConnection.connect(db_url) as conn:
         # Open a cursor to perform database operations
